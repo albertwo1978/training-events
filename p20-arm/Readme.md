@@ -2,14 +2,17 @@ Challenges -
 
 Day 1-2 Challenges:
 +	“Hello World” – ARM template that accepts generic input and passes it as output
+    +   Key Takeaways - Core Elements of an ARM Template and the Different ways to deploy 
  
 +	Extend ARM template to provision VNET w/ one subnet 
     +	Template takes the following inputs - 
         +	Virtual Network Name and Address Prefix
         +	Subnet Name and Address Prefix
+    +   Key Takeaways - Parameters and Parameter Files
  
-+	Extend ARM template to create NSG opening ports 80 and 22
- 
++	Extend ARM template to create NSG opening ports 80 and 22 and apply to the default subnet
+    +   Key Takeaways - Dependencies and idempotency
+
 +	Extend ARM Template to deploy Webserver 
  
 +	Extend ARM template to add Public Load Balancer and put Webserver in backend pool
