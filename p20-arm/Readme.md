@@ -21,15 +21,23 @@ Day 1-2 Challenges:
     +   Key Takeaways - Customer script extensions, globally unique naming context and complex dependencies
  
 +	Challenge 5 - Extend ARM template to add Public Load Balancer and put Webserver in backend pool
+    +   VM requirements -
+        +   Create frontend pool enabling port 80 to website
     +   Key Takeaways - Resource ownership and dependencies
  
 +	Challenge 6 - Extend ARM template to add NAT Rule to ILB for SSH access to backend
     +   Key Takeaways - Network access policies
  
 +	Challenge 7 - Extend ARM template to replace VM with a VM Scale Set 
-    +   Key Takeaways - Scales sets provide scalable infrastructure capabilities
+    +   VMSS requirements -
+        +   Linux VM
+        +   Convert NAT rule to NAT pool
+    +   Key Takeaways - Scales sets provide scalability for Infrastructure in Azure
 
 +	Challenge 8 - Extend ARM template to add a custom script extension that installs a web server packages/roles and deploy basic web app 
+    +   VMSS requirements -
+        +   Pull website config from https://raw.githubusercontent.com/albertwo1978/training-events/master/p20-arm/scripts/install_apache.sh
+    +   Key Takeaways - 
 
 +	Challenge 9 - Extend ARM template to include auto scaling policy to scale up when CPU performance hits 90%
 
@@ -42,6 +50,8 @@ Bonus
     +   https://github.com/Azure/azure-quickstart-templates/blob/6691996036fd095cee3d07336acfcba48110d268/201-web-app-sql-database/azuredeploy.json 
  
 Day 3 Challenges:  
++   Challenge 10 - Separate deployments into nested templates
+
 +	Deploy Jenkins and/or VSTS for CI/CD
  
 +	Piece together previously created content into pipeline

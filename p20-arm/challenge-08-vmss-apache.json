@@ -312,6 +312,25 @@
                   }
                 }
               ]
+            },
+            "extensionProfile": {
+              "extensions": [
+                {
+                  "name": "p20websitescript",
+                  "properties": {
+                    "publisher": "Microsoft.Azure.Extensions",
+                    "type": "CustomScript",
+                    "typeHandlerVersion": "2.0",
+                    "autoUpgradeMinorVersion": true,
+                    "settings": {
+                      "fileUris": [
+                        "https://raw.githubusercontent.com/albertwo1978/training-events/master/p20-arm/scripts/install_apache.sh"
+                      ],
+                      "commandToExecute": "sudo bash install_apache.sh"     
+                    }
+                  }
+                }
+              ]
             }
           }
         }

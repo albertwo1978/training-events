@@ -10,3 +10,6 @@ Basic Links
 Cheats 
 #Run Selected (Highlighted) -  CTL+SHIFT+P - "Terminal: Selected Text in Active Terminal"
 #Change Default Terminal -     CTL+SHIFT+P - "Terminal: Select Default Shell"
+
+Terms
+#autoUpgradeMinorVersion -     blah
