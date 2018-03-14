@@ -4,7 +4,8 @@ Day 1-2 Challenges:
 •	“Hello World” – ARM template that accepts generic input and passes it as output
  
 •	Extend ARM template to provision VNET w/ two Subnets 
-    - Template takes Virtual Network Name and Subnet Names as Inputs
+    •	Template takes the following inputs - 
+        •	Virtual Network Name
  
 •	Extend ARM template to create NSG opening ports 80 and 22
  
