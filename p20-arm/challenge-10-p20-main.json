@@ -76,327 +76,90 @@
         "metadata": {
           "description": "Subnet Prefix"
         }
+      },
+      "_artifactsLocation": {
+        "type": "string",
+        "metadata": {
+          "description": "Location of resources that the script is dependent on such as linked templates and DSC modules"
+        },
+        "defaultValue": "https://raw.githubusercontent.com/albertwo1978/training-events/master/p20-arm"
+      },
+      "_artifactsLocationSasToken": {
+        "type": "securestring",
+        "metadata": {
+          "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated."
+        },
+        "defaultValue": ""
       }
     },
     "variables": {
-      "defaultNsgName": "defaultNsg",
-      "nicName": "WebVMNic",
-      "publicIPAddressName": "P20PublicIP",
-      "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
-      "publicIPAddressType": "Dynamic",
-      "dnsNameForPublicIP": "[concat(parameters('resourcePrefix'), uniquestring(resourceGroup().id), '-pip')]",
       "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName')),'/subnets/',parameters('subnetName'))]",
-      "vmSize": "Standard_A0",
-      "loadBalancerName": "p20LoadBalancer",
-      "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
-      "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
-      "backEndPoolName": "loadBalancerBackend",
-      "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/', variables('backEndPoolName'))]",
-      "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
-      "osType": {
-        "publisher": "Canonical",
-        "offer": "UbuntuServer",
-        "sku": "[parameters('ubuntuOSVersion')]",
-        "version": "latest"
-      },
-      "imageReference": "[variables('osType')]"
+      "vnetTemplateURL": "[concat(parameters('_artifactsLocation'),'/nestedtemplates/deploy-vnet.json',parameters('_artifactsLocationSasToken'))]",
+      "vmssTemplateURL": "[concat(parameters('_artifactsLocation'),'/nestedtemplates/deploy-vmss.json',parameters('_artifactsLocationSasToken'))]"
     },
     "resources": [
       {
-        "apiVersion": "2015-06-15",
-        "type": "Microsoft.Network/networkSecurityGroups",
-        "name": "[variables('defaultNsgName')]",
-        "location": "[resourceGroup().location]",
+        "name": "vnet_deployment",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2015-01-01",
         "properties": {
-          "securityRules": [
-            {
-              "name": "ssh_rule",
-              "properties": {
-                "description": "Allow SSH",
-                "protocol": "Tcp",
-                "sourcePortRange": "*",
-                "destinationPortRange": "22",
-                "sourceAddressPrefix": "Internet",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 100,
-                "direction": "Inbound"
-              }
-            },
-            {
-              "name": "web_rule",
-              "properties": {
-                "description": "Allow HTTP",
-                "protocol": "Tcp",
-                "sourcePortRange": "*",
-                "destinationPortRange": "80",
-                "sourceAddressPrefix": "Internet",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 101,
-                "direction": "Inbound"
-              }
-            }
-          ]
-        }
-      },
-      {
-        "apiVersion": "2015-06-15",
-        "type": "Microsoft.Network/virtualNetworks",
-        "name": "[parameters('vnetName')]",
-        "location": "[resourceGroup().location]",
-        "dependsOn": [
-          "[concat('Microsoft.Network/networkSecurityGroups/', variables('defaultNsgName'))]"
-        ],
-        "properties": {
-          "addressSpace": {
-            "addressPrefixes": [
-              "[parameters('vnetPrefix')]"
-            ]
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('vnetTemplateUrl')]",
+            "contentVersion": "1.0.0.0"
           },
-          "subnets": [
-            {
-              "name": "[parameters('subnetName')]",
-              "properties": {
-                "addressPrefix": "[parameters('subnetPrefix')]",
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('defaultNsgName'))]"
-                }
-              }
-            }
-          ]
-        }
-      },
-      {
-        "apiVersion": "2015-05-01-preview",
-        "type": "Microsoft.Network/publicIPAddresses",
-        "name": "[variables('publicIPAddressName')]",
-        "location": "[resourceGroup().location]",
-        "properties": {
-          "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
-          "dnsSettings": {
-            "domainNameLabel": "[variables('dnsNameForPublicIP')]"
-          }
-        }
-      },
-      {
-        "apiVersion": "2016-03-30",
-        "name": "[variables('loadBalancerName')]",
-        "type": "Microsoft.Network/loadBalancers",
-        "location": "[resourceGroup().location]",
-        "dependsOn": [
-          "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
-        ],
-        "properties": {
-          "frontendIPConfigurations": [
-            {
-              "name": "loadBalancerFrontEnd",
-              "properties": {
-                "publicIPAddress": {
-                  "id": "[variables('publicIPAddressID')]"
-                }
-              }
-            }
-          ],
-          "backendAddressPools": [
-            {
-              "name": "[variables('backEndPoolName')]"
-            }
-          ],
-          "inboundNatPools": [
-            {
-              "name": "SSH",
-              "properties": {
-                "frontendIPConfiguration": {
-                  "id": "[variables('frontEndIPConfigID')]"
-                },
-                "protocol": "tcp",
-                "frontendPortRangeStart": 10022,
-                "frontendPortRangeEnd": 10050,
-                "backendPort": 22
-              }
-            }
-          ],
-          "loadBalancingRules": [
-            {
-              "name": "LBRule",
-              "properties": {
-                "frontendIPConfiguration": {
-                  "id": "[variables('frontEndIPConfigID')]"
-                },
-                "backendAddressPool": {
-                  "id": "[variables('lbPoolID')]"
-                },
-                "protocol": "Tcp",
-                "frontendPort": 80,
-                "backendPort": 80,
-                "enableFloatingIP": false,
-                "idleTimeoutInMinutes": 5,
-                "probe": {
-                  "id": "[variables('lbProbeID')]"
-                }
-              }
-            }
-          ],
-          "probes": [
-            {
-              "name": "tcpProbe",
-              "properties": {
-                "protocol": "Tcp",
-                "port": 80,
-                "intervalInSeconds": 5,
-                "numberOfProbes": 2
-              }
-            }
-          ]
-        }
-      },
-      {
-        "type": "Microsoft.Compute/virtualMachineScaleSets",
-        "name": "[parameters('vmssName')]",
-        "location": "[resourceGroup().location]",
-        "apiVersion": "2017-03-30",
-        "dependsOn": [
-          "[concat('Microsoft.Network/loadBalancers/', variables('loadbalancerName'))]",
-          "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
-        ],
-        "sku": {
-          "name": "[variables('vmSize')]",
-          "tier": "Standard",
-          "capacity": "[parameters('vmssInstanceCount')]"
-        },
-        "properties": {
-          "overprovision": "false",
-          "upgradePolicy": {
-            "mode": "Manual"
-          },
-          "virtualMachineProfile": {
-            "storageProfile": {
-              "osDisk": {
-                "caching": "ReadOnly",
-                "createOption": "FromImage"
-              },
-              "imageReference": "[variables('imageReference')]"
+          "parameters": {
+            "vnetName": {
+              "value": "[parameters('vnetName')]"
             },
-            "osProfile": {
-              "computerNamePrefix": "[parameters('resourcePrefix')]",
-              "adminUsername": "[parameters('adminUsername')]",
-              "adminPassword": "[parameters('adminPassword')]"
+            "vnetPrefix": {
+              "value": "[parameters('vnetPrefix')]"
             },
-            "networkProfile": {
-              "networkInterfaceConfigurations": [
-                {
-                  "name": "[variables('nicName')]",
-                  "properties": {
-                    "primary": true,
-                    "ipConfigurations": [
-                      {
-                        "name": "ipconfig1",
-                        "properties": {
-                          "subnet": {
-                            "id": "[variables('subnetRef')]"
-                          },
-                          "loadBalancerBackendAddressPools": [
-                            {
-                              "id": "[concat(variables('lbID'), '/backendAddressPools/', variables('backEndPoolName'))]"
-                            }
-                          ],
-                          "loadBalancerInboundNatPools": [
-                            {
-                              "id": "[concat(variables('lbID'),'/inboundNatPools/SSH')]"
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
+            "subnetName": {
+              "value": "[parameters('subnetName')]"
             },
-            "extensionProfile": {
-              "extensions": [
-                {
-                  "name": "p20websitescript",
-                  "properties": {
-                    "publisher": "Microsoft.Azure.Extensions",
-                    "type": "CustomScript",
-                    "typeHandlerVersion": "2.0",
-                    "autoUpgradeMinorVersion": true,
-                    "settings": {
-                      "fileUris": [
-                        "https://raw.githubusercontent.com/albertwo1978/training-events/master/p20-arm/scripts/install_apache_vmss.sh"
-                      ],
-                      "commandToExecute": "bash install_apache_vmss.sh"     
-                    }
-                  }
-                }
-              ]
+            "subnetPrefix": {
+              "value": "[parameters('subnetPrefix')]"
             }
           }
         }
       },
       {
-        "type": "Microsoft.Insights/autoscaleSettings",
-        "apiVersion": "2015-04-01",
-        "name": "autoscalehost",
-        "location": "[resourceGroup().location]",
+        "name": "vmss_deployment",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2015-01-01",
         "dependsOn": [
-          "[concat('Microsoft.Compute/virtualMachineScaleSets/', parameters('vmssName'))]"
+          "[concat('Microsoft.Resources/deployments/', 'vnet_deployment')]"
         ],
         "properties": {
-          "name": "autoscalehost",
-          "targetResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', parameters('vmssName'))]",
-          "enabled": true,
-          "profiles": [
-            {
-              "name": "CPUProfile",
-              "capacity": {
-                "minimum": "1",
-                "maximum": "10",
-                "default": "1"
-              },
-              "rules": [
-                {
-                  "metricTrigger": {
-                    "metricName": "Percentage CPU",
-                    "metricNamespace": "",
-                    "metricResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', parameters('vmssName'))]",
-                    "timeGrain": "PT1M",
-                    "statistic": "Average",
-                    "timeWindow": "PT5M",
-                    "timeAggregation": "Average",
-                    "operator": "GreaterThan",
-                    "threshold": 90.0
-                  },
-                  "scaleAction": {
-                    "direction": "Increase",
-                    "type": "ChangeCount",
-                    "value": "1",
-                    "cooldown": "PT1M"
-                  }
-                },
-                {
-                  "metricTrigger": {
-                    "metricName": "Percentage CPU",
-                    "metricNamespace": "",
-                    "metricResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/',  parameters('vmssName'))]",
-                    "timeGrain": "PT1M",
-                    "statistic": "Average",
-                    "timeWindow": "PT5M",
-                    "timeAggregation": "Average",
-                    "operator": "LessThan",
-                    "threshold": 30.0
-                  },
-                  "scaleAction": {
-                    "direction": "Decrease",
-                    "type": "ChangeCount",
-                    "value": "1",
-                    "cooldown": "PT1M"
-                  }
-                }
-              ]
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('vmssTemplateUrl')]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+            "resourcePrefix": {
+              "value": "[parameters('resourcePrefix')]"
+            },
+            "vmssName": {
+              "value": "[parameters('vmssName')]"
+            },
+            "vmssInstanceCount": {
+              "value": "[parameters('vmssInstanceCount')]"
+            },
+            "subnetRef": {
+              "value": "[variables('subnetRef')]"
+            },
+            "adminUsername": {
+              "value": "[parameters('adminUsername')]"
+            },
+            "adminPassword": {
+              "value": "[parameters('adminPassword')]"
+            },
+            "ubuntuOSVersion": {
+              "value": "[parameters('ubuntuOSVersion')]"
             }
-          ]
+          }
         }
       }
     ],
