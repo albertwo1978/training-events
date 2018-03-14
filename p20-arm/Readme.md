@@ -36,10 +36,15 @@ Day 1-2 Challenges:
 
 +	Challenge 8 - Extend ARM template to add a custom script extension that installs a web server packages/roles and deploy basic web app 
     +   VMSS requirements -
-        +   Pull website config from https://raw.githubusercontent.com/albertwo1978/training-events/master/p20-arm/scripts/install_apache.sh
-    +   Key Takeaways - 
+        +   Pull website config from https://raw.githubusercontent.com/albertwo1978/training-events/master/p20-arm/scripts/install_apache_vmss.sh
+    +   Key Takeaways - Custom script extension does not lock deployment order
 
-+	Challenge 9 - Extend ARM template to include auto scaling policy to scale up when CPU performance hits 90%
++	Challenge 9 - Extend ARM template to include auto scaling policy to scale when CPU performance hits 90%
+    +   VMSS requirements -
+        +   Scale back down when CPU performance hits 30%
+        +   Scale in single VM increments
+        +   Enforce a 1 minute cool down between scale events
+    +   Key Takeaways - ARM allows declarative management of policies and actions
 
 Bonus
 +	Create Log Analytics Workspace

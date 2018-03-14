@@ -117,7 +117,7 @@ az group deployment create \
 ##DEPLOY CHALLENGE EIGHT##
 
 
-#Reference - https://github.com/Azure/azure-quickstart-templates/tree/21c1bf4e90a49e431c85384251e35934bce2a7f4/201-vmss-ubuntu-web-ssl
+#Reference - https://github.com/Azure/azure-quickstart-templates/tree/21c1bf4e90a49e431c85384251e35934bce2a7f4/201-vmss-lapstack-autoscale
 
 #With Parameters File
 az group deployment create \
@@ -140,7 +140,7 @@ az group deployment create \
     --parameters challenge-09.parameters.json
 
 
-##DEPLOY CHALLENGE NINE##
+##DEPLOY CHALLENGE TEN##
 
 
 #Reference - 
