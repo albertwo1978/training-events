@@ -71,5 +71,32 @@ az group deployment create \
 az group deployment create \
     --name P20Deployment \
     --resource-group P20-RG02 \
-    --template-file challenge-03-vnet-with-nsg.json \
-    --parameters challenge-03.parameters.json
+    --template-file challenge-04-web-server.json \
+    --parameters challenge-04.parameters.json
+
+
+##DEPLOY CHALLENGE FIVE##
+
+
+#Reference - https://github.com/Azure/azure-quickstart-templates/tree/052db5feeba11f85d57f170d8202123511f72044/201-2-vms-loadbalancer-lbrules
+
+#With Parameters File
+az group deployment create \
+    --name P20Deployment \
+    --resource-group P20-RG02 \
+    --template-file challenge-05-load-balanced-web-server.json \
+    --parameters challenge-05.parameters.json
+
+
+##DEPLOY CHALLENGE SIX##
+
+
+#Reference - https://github.com/Azure/azure-quickstart-templates/tree/052db5feeba11f85d57f170d8202123511f72044/101-loadbalancer-with-nat-rule
+
+#With Parameters File
+az group deployment create \
+    --name P20Deployment \
+    --resource-group P20-RG02 \
+    --template-file challenge-06-load-balanced-nat-rule.json \
+    --parameters challenge-06.parameters.json
+    

@@ -73,12 +73,19 @@
       "defaultNsgName": "defaultNsg",
       "nicName": "WebVMNic",
       "publicIPAddressName": "P20PublicIP",
+      "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
       "publicIPAddressType": "Dynamic",
       "dnsNameForPublicIP": "[concat(parameters('resourcePrefix'), uniquestring(resourceGroup().id), '-pip')]",
       "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName')),'/subnets/',parameters('subnetName'))]",
       "vmSize": "Standard_A0",
       "imagePublisher": "Canonical",
-      "imageOffer": "UbuntuServer"
+      "imageOffer": "UbuntuServer",
+      "loadBalancerName": "p20LoadBalancer",
+      "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
+      "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
+      "backEndPoolName": "loadBalancerBackend",
+      "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/', variables('backEndPoolName'))]",
+      "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]"
     },
     "resources": [
       {
@@ -165,7 +172,8 @@
         "location": "[resourceGroup().location]",
         "dependsOn": [
           "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
-          "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
+          "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
+          "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
         ],
         "properties": {
           "ipConfigurations": [
@@ -173,12 +181,14 @@
               "name": "ipconfig1",
               "properties": {
                 "privateIPAllocationMethod": "Dynamic",
-                "publicIPAddress": {
-                  "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
-                },
                 "subnet": {
                   "id": "[variables('subnetRef')]"
-                }
+                },
+                "loadBalancerBackendAddressPools": [
+                  {
+                    "id": "[concat(variables('lbID'), '/backendAddressPools/', variables('backEndPoolName'))]"
+                  }
+                ]
               }
             }
           ]
@@ -242,6 +252,64 @@
             ],
             "commandToExecute": "sh install_apache.sh"
           }
+        }
+      },
+      {
+        "apiVersion": "2016-03-30",
+        "name": "[variables('loadBalancerName')]",
+        "type": "Microsoft.Network/loadBalancers",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+          "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
+        ],
+        "properties": {
+          "frontendIPConfigurations": [
+            {
+              "name": "loadBalancerFrontEnd",
+              "properties": {
+                "publicIPAddress": {
+                  "id": "[variables('publicIPAddressID')]"
+                }
+              }
+            }
+          ],
+          "backendAddressPools": [
+            {
+              "name": "[variables('backEndPoolName')]"
+            }
+          ],
+          "loadBalancingRules": [
+            {
+              "name": "LBRule",
+              "properties": {
+                "frontendIPConfiguration": {
+                  "id": "[variables('frontEndIPConfigID')]"
+                },
+                "backendAddressPool": {
+                  "id": "[variables('lbPoolID')]"
+                },
+                "protocol": "Tcp",
+                "frontendPort": 80,
+                "backendPort": 80,
+                "enableFloatingIP": false,
+                "idleTimeoutInMinutes": 5,
+                "probe": {
+                  "id": "[variables('lbProbeID')]"
+                }
+              }
+            }
+          ],
+          "probes": [
+            {
+              "name": "tcpProbe",
+              "properties": {
+                "protocol": "Tcp",
+                "port": 80,
+                "intervalInSeconds": 5,
+                "numberOfProbes": 2
+              }
+            }
+          ]
         }
       }
     ],

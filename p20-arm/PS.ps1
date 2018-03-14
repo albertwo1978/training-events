@@ -63,8 +63,29 @@ New-AzureRmResourceGroupDeployment -Name P20Deployment -ResourceGroupName P20-RG
 
 #Reference - https://github.com/Azure/azure-quickstart-templates/blob/052db5feeba11f85d57f170d8202123511f72044/apache2-on-ubuntu-vm/azuredeploy.json
 
-
 #With Parameters File
 New-AzureRmResourceGroupDeployment -Name P20Deployment -ResourceGroupName P20-RG04 `
   -TemplateFile challenge-04-web-server.json `
   -TemplateParameterFile .\challenge-04.parameters.json
+
+
+##DEPLOY CHALLENGE FIVE##
+
+
+#Reference - https://github.com/Azure/azure-quickstart-templates/tree/052db5feeba11f85d57f170d8202123511f72044/201-2-vms-loadbalancer-lbrules
+
+#With Parameters File
+New-AzureRmResourceGroupDeployment -Name P20Deployment -ResourceGroupName P20-RG04 `
+  -TemplateFile challenge-05-load-balanced-web-server.json `
+  -TemplateParameterFile .\challenge-05.parameters.json
+
+
+##DEPLOY CHALLENGE SIX##
+
+
+#Reference - https://github.com/Azure/azure-quickstart-templates/tree/052db5feeba11f85d57f170d8202123511f72044/101-loadbalancer-with-nat-rule
+
+#With Parameters File
+New-AzureRmResourceGroupDeployment -Name P20Deployment -ResourceGroupName P20-RG04 `
+  -TemplateFile challenge-06-load-balanced-nat-rule.json `
+  -TemplateParameterFile .\challenge-06.parameters.json

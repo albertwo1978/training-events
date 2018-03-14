@@ -1,5 +1,4 @@
 Basic Links 
-
 #ARM Basics -                  https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview
 #ARM Template 101 -            https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-authoring-templates
 #Template Deployment 101 -     https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-create-first-template
