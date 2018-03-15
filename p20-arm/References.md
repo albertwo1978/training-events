@@ -5,7 +5,7 @@ Basic Links
 #Manage Templates in VS Code - https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-vscode-extension
 #Using VS Code Terminal -      https://code.visualstudio.com/docs/editor/integrated-terminal
 #Manage Template in VS 2017 -  https://docs.microsoft.com/en-us/azure/azure-resource-manager/vs-azure-tools-resource-groups-deployment-projects-create-deploy
-
+#ARM Lab -                     https://azurecitadel.github.io/workshops/arm/arm-lab2-sourcesOfResources/
 
 Cheats 
 #Run Selected (Highlighted) -  CTL+SHIFT+P - "Terminal: Selected Text in Active Terminal"
