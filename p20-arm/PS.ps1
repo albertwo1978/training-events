@@ -130,6 +130,6 @@ New-AzureRmResourceGroupDeployment -Name P20Deployment -ResourceGroupName P20-RG
 #Reference - 
 
 #With Parameters File
-New-AzureRmResourceGroupDeployment -Name P20Deployment -ResourceGroupName P20-RG02 `
+New-AzureRmResourceGroupDeployment -Name P20Deployment -ResourceGroupName P20-RG03 `
 -TemplateFile challenge-10-p20-main.json `
 -TemplateParameterFile .\challenge-10.parameters.json

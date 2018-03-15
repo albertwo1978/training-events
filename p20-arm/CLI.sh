@@ -148,6 +148,6 @@ az group deployment create \
 #With Parameters File
 az group deployment create \
     --name P20Deployment \
-    --resource-group P20-RG02 \
+    --resource-group P20-RG03 \
     --template-file challenge-10-p20-main.json \
     --parameters challenge-10.parameters.json

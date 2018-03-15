@@ -56,6 +56,9 @@ Bonus
  
 Day 3 Challenges:  
 +   Challenge 10 - Separate deployments into nested templates
+    +   Minmum requirements -
+        +   Separate virtual network and vmss into two linked subtemplates
+    +   Key Takeaways - Linked templates allow for granular resource management and deployment
 
 +	Deploy Jenkins and/or VSTS for CI/CD
  
