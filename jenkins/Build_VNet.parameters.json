@@ -1,18 +1,21 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "vnetName": {
-        "value": "P20VNet"
-      },
-      "vnetPrefix": {
-        "value": "10.0.0.0/16"
-      },
-      "subnetName": {
-        "value": "Default"
-      },
-      "subnetPrefix": {
-        "value": "10.0.0.0/24"
-      }
+        "vnetName": {
+            "value": "{Your_Vnet_Name}"
+        },
+        "vnetPrefix": {
+            "value": "{Your_VNet_CIDR}"
+        },
+        "subnetName": {
+            "value": "{Your_Subnet_Name}"
+        },
+        "subnetPrefix": {
+            "value": "{Your_Subnet_CIDR}"
+        },
+        "NsgName": {
+            "value": "{Your_NSG_Name}"
+        }
     }
 }
