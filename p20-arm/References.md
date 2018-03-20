@@ -12,4 +12,4 @@ Cheats
 #Change Default Terminal -     CTL+SHIFT+P - "Terminal: Select Default Shell"
 
 Terms
-#autoUpgradeMinorVersion -     blah
+#autoUpgradeMinorVersion -     
