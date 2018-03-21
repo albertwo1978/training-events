@@ -73,4 +73,6 @@ The build parameters that can be changed are:
     * ```vmName``` - Specify Your Virtual VM Name
     * ```adminUsername``` - User name for the Virtual Machine.
     * ```SSHKeys``` - SSH RSA public key file as a string.
+ 
+
 ![Pipeline-Custom](./src/pipeline-custom.jpg)
