@@ -26,7 +26,7 @@
     },
     "variables": {
         "nicName": "WebVMNic",
-        "vmSize": "Standard_DS2_v3",
+        "vmSize": "Standard_DS2_v2",
         "imageReference": {
             "publisher": "Canonical",
             "imageOffer": "UbuntuServer",
