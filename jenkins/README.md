@@ -52,3 +52,15 @@ Service Principal: [How to create](https://docs.microsoft.com/en-us/cli/azure/cr
 2. [Put in the parameters](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_P20_Demo_Pipeline/build?delay=0sec)
 
 ![Pipeline-Parameters](./src/pipeline-parameters.jpg)
+
+3. [Put in your Service Principal Information](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_P20_Demo_Pipeline/build?delay=0sec)
+    * Put in the following information:
+        * ```appId``` - Application ID you got from creating the Service Principal
+        * ```passwd``` - The password you gave to the service principal
+        * ```tenant``` - Tenant ID of the service principal (You would have gotten this when you created the Service Principal)
+
+![Pipeline-Parameters](./src/pipeline-service-principal.jpg)
+
+4. [Modify build parameters if required](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_P20_Demo_Pipeline/build?delay=0sec)
+
+![Pipeline-Custom](./src/pipeline-custom.jpg)
