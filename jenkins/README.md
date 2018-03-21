@@ -62,5 +62,15 @@ Service Principal: [How to create](https://docs.microsoft.com/en-us/cli/azure/cr
 ![Pipeline-Parameters](./src/pipeline-service-principal.jpg)
 
 4. [Modify build parameters if required](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_P20_Demo_Pipeline/build?delay=0sec)
-
+The build parameters that can be changed are:
+    * ```region``` - Choose the region to deploy in.
+    * ```ResourceName``` - Put in the resource name you want to create
+    * ```NsgName``` - The name of the Network Security Group
+    * ```vnetName``` - Specify your Virtual Network Name
+    * ```vnetPrefix``` - Specify Your Vnet CIDR Block
+    * ```subnetName``` - Specify the Subnet Name
+    * ```subnetPrefix``` - Specify Your Subnet CIDR Block
+    * ```vmName``` - Specify Your Virtual VM Name
+    * ```adminUsername``` - User name for the Virtual Machine.
+    * ```SSHKeys``` - SSH RSA public key file as a string.
 ![Pipeline-Custom](./src/pipeline-custom.jpg)
