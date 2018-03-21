@@ -86,7 +86,7 @@ Service Principal: [How to create](https://docs.microsoft.com/en-us/cli/azure/cr
 
 ![Pipeline-Run](./src/pipeline-run.jpg)
 
-7. Delete Everything by Force (If you do not by default the resource will be deleted after 60 minutes)
+7. Delete Everything by Force (If you do not by default the resource will be **deleted** after **60 minutes**)
 
 ![Pipeline-Delete](./src/pipeline-delete.jpg)
 
