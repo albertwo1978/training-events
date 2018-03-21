@@ -43,3 +43,9 @@ Service Principal: [How to create](https://docs.microsoft.com/en-us/cli/azure/cr
     * [No Job its part of the pipeline](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_P20_Demo_Pipeline/configure)
 9. Delete the Resouce Group
     * [Jenkins Job Link](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/P20_Delete/)
+
+## Steps to run the Pipeline
+
+1. [Build the pipeline with parameters](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_P20_Demo_Pipeline/build?delay=0sec)
+
+![Pipeline](./src/pipeline.jpg)
