@@ -76,3 +76,7 @@ The build parameters that can be changed are:
  
 
 ![Pipeline-Custom](./src/pipeline-custom.jpg)
+
+5. Once Done Click **Build**
+
+![Pipeline-Build](./src/pipeline-Build.jpg)
