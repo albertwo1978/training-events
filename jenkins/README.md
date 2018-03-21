@@ -88,3 +88,7 @@ The build parameters that can be changed are:
 7. Delete Everything by Force
 
 ![Pipeline-Delete](./src/pipeline-delete.jpg)
+
+8. Confirm Resource Group Deleted
+
+![Pipeline-Confirm](./src/pipeline-Confirm.jpg)
