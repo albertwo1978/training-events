@@ -11,7 +11,7 @@ GitHub Repo: [Templates](https://github.com/alihhussain/training-events/tree/mas
 
 Service Principal: [How to create](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?toc=%2Fazure%2Fazure-resource-manager%2Ftoc.json&view=azure-cli-latest)
 
-## Pipeline
+## [Pipeline](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_P20_Demo_Pipeline/)
 
 1. Creating Resource Group: 
     * [Jenkins Job Link](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_RG/)
@@ -36,3 +36,10 @@ Service Principal: [How to create](https://docs.microsoft.com/en-us/cli/azure/cr
     * [Template File](https://github.com/alihhussain/training-events/blob/master/jenkins/Build_VM.json)
     * [Parameter File](https://github.com/alihhussain/training-events/blob/master/jenkins/Build_VM.parameters.json)
 7. Run the Custom Extension against the VM
+    * [Jenkins Job Link](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_VMX/)   
+    * [Template File](https://github.com/alihhussain/training-events/blob/master/jenkins/Build_VMX.json)
+    * [Parameter File](https://github.com/alihhussain/training-events/blob/master/jenkins/Build_VMX.parameters.json)
+8. Wait Job - Will wait 90 minutes before Resources Delete
+    * [No Job its part of the pipeline](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_P20_Demo_Pipeline/configure)
+9. Delete the Resouce Group
+    * [Jenkins Job Link](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/P20_Delete/)
