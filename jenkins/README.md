@@ -80,3 +80,7 @@ The build parameters that can be changed are:
 5. Once Done Click **Build**
 
 ![Pipeline-Build](./src/pipeline-Build.jpg)
+
+6. See things Run
+
+![Pipeline-Run](./src/pipeline-run.jpg)
