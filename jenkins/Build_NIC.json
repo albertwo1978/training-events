@@ -15,6 +15,13 @@
             "metadata": {
                 "description": "Subnet Name"
             }
+        },
+        "NsgName": {
+            "type": "string",
+            "defaultValue": "defaultNsg",
+            "metadata": {
+                "description": "The name of the Network Security Group"
+            }
         }
     },
     "variables": {
@@ -41,7 +48,10 @@
                             }
                         }
                     }
-                ]
+                ],
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NsgName'))]"
+                }
             }
         }
     ],

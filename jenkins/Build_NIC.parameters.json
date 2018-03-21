@@ -7,6 +7,9 @@
         },
         "subnetName": {
             "value": "{Your_Subnet_Name}"
+        },
+        "NsgName": {
+            "value": "{Your_NSG_Name}"
         }
     }
 }
