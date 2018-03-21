@@ -46,6 +46,9 @@ Service Principal: [How to create](https://docs.microsoft.com/en-us/cli/azure/cr
 
 ## Steps to run the Pipeline
 
-1. [Build the pipeline with parameters](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_P20_Demo_Pipeline/build?delay=0sec)
+1. [Build the pipeline with parameters](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_P20_Demo_Pipeline/)
 
 ![Pipeline](./src/pipeline.jpg)
+2. [Put in the parameters](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_P20_Demo_Pipeline/build?delay=0sec)
+
+![Pipeline-Parameters](./src/pipeline-parameters.jpg)
