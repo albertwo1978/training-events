@@ -85,7 +85,8 @@
     "outputs": {
         "sshCommand": {
             "type": "string",
-            "value": "[concat('ssh ', parameters('adminUsername'), '@', reference(variables('publicIPAddressName')).dnsSettings.fqdn)]"
+            "value": "[concat('ssh ', parameters('adminUsername'), '@', reference(concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName')), '2016-03-30').dnsSettings.fqdn)]"
         }
     }
 }
+
