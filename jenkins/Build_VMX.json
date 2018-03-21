@@ -11,6 +11,7 @@
         }
     },
     "variables": {
+        "publicIPAddressName": "PublicIP"
     },
     "resources": [
         {
@@ -32,5 +33,10 @@
             }
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "http": {
+            "type": "string",
+            "value": "[concat('http://', reference(concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName')), '2016-03-30').dnsSettings.fqdn)]"
+        }
+    }
 }
