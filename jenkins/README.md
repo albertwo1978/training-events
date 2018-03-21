@@ -84,3 +84,7 @@ The build parameters that can be changed are:
 6. See things Run
 
 ![Pipeline-Run](./src/pipeline-run.jpg)
+
+7. Delete Everything by Force
+
+![Pipeline-Delete](./src/pipeline-delete.jpg)
