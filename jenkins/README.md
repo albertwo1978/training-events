@@ -15,6 +15,8 @@ GitHub Repo: [Templates](https://github.com/albertwo1978/training-events/tree/ma
 
 ## [Pipeline Steps](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_P20_Demo_Pipeline/)
 
+
+![Pipeline Steps](./src/pipeline-steps.jpg)
 1. Creating Resource Group: 
     * [Jenkins Job Link](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_RG/)
 2.  Creating Network Security Group: 
