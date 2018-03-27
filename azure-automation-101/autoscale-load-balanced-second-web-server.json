@@ -316,7 +316,7 @@
               "version": "latest"
             },
             "osDisk": {
-              "name": "osdisk",
+              "name": "osdisk2",
               "caching": "ReadWrite",
               "createOption": "FromImage"
             }
