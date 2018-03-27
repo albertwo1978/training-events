@@ -35,7 +35,7 @@ if ($WebhookData -ne $null) {
     # Set Parameters
     $RGName = $AlertContext.resourceGroupName
 
-    New-AzureRmResourceGroupDeployment -Name AA101Deployment -ResourceGroupName P20-RG01 `
+    New-AzureRmResourceGroupDeployment -Name AA101Deployment -ResourceGroupName $RGName `
     -TemplateUri https://raw.githubusercontent.com/albertwo1978/training-events/master/azure-automation-101/autoscale-load-balanced-web-server.json
 }
 else 
