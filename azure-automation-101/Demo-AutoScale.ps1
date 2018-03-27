@@ -33,10 +33,13 @@ if ($WebhookData -ne $null) {
     Login-AzureRmAccount -ServicePrincipal -Tenant "<tenant_id>" -Credential $mycreds  -SubscriptionId "<subscription_id>"
 
     # Set Parameters
-    $RGName = $AlertContext.resourceGroupName
+    $RGName = "$AlertContext.resourceGroupName"
 
+    # Deploy Autoscale Template
     New-AzureRmResourceGroupDeployment -Name AA101Deployment -ResourceGroupName $RGName `
-    -TemplateUri https://raw.githubusercontent.com/albertwo1978/training-events/master/azure-automation-101/autoscale-load-balanced-second-web-server.json
+    -TemplateUri https://raw.githubusercontent.com/albertwo1978/training-events/master/azure-automation-101/autoscale-load-balanced-second-web-server.json `
+    -TemplateParameterUri https://raw.githubusercontent.com/albertwo1978/training-events/master/azure-automation-101/autoscale-load-balanced-web-server.parameters.json
+
 }
 else 
 {
