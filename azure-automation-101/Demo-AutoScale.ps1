@@ -33,7 +33,7 @@ if ($WebhookData -ne $null) {
     Login-AzureRmAccount -ServicePrincipal -Tenant "<tenant_id>" -Credential $mycreds -SubscriptionId "af6f3817-cbbe-4afa-ba17-ed7224fe70bc"
 
     # Set Parameters
-    $RGName = "$AlertContext.resourceGroupName"
+    $RGName = $AlertContext.resourceGroupName
 
     # Deploy Autoscale Template
     New-AzureRmResourceGroupDeployment -Name AA101Deployment -ResourceGroupName $RGName `
