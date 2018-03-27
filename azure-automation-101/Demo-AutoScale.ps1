@@ -40,5 +40,5 @@ if ($WebhookData -ne $null) {
 }
 else 
 {
-    Write-Error "This runbook is meant to only be started from a webhook." 
+    Write-Error "This runbook is meant to only be started from a webhook."
 }
