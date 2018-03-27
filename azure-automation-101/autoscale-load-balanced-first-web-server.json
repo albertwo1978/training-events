@@ -81,7 +81,7 @@
       "defaultNsgName": "defaultNsg",
       "nic1Name": "WebVM1Nic",
       "nic2Name": "WebVM2Nic",
-      "publicIPAddressName": "AA101PublicIP1",
+      "publicIPAddressName": "AA101PublicIP",
       "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
       "publicIPAddressType": "Dynamic",
       "dnsNameForPublicIP": "[concat(parameters('resourcePrefix'), uniquestring(resourceGroup().id), '-pip1')]",
@@ -166,8 +166,15 @@
       {
         "type": "Microsoft.Compute/availabilitySets",
         "name": "[variables('availabilitySetName')]",
-        "apiVersion": "2015-06-15",
-        "location": "[resourceGroup().location]"
+        "apiVersion": "2017-03-30",
+        "location": "[resourceGroup().location]",
+        "sku": {
+          "name": "Aligned"
+        },
+        "properties": {
+          "PlatformUpdateDomainCount": 5,
+          "PlatformFaultDomainCount": 2
+        }
       },
       {
         "apiVersion": "2015-05-01-preview",
@@ -216,7 +223,7 @@
         "location": "[resourceGroup().location]",
         "dependsOn": [
           "[concat('Microsoft.Network/networkInterfaces/', variables('nic1Name'))]",
-          "[concat('Microsoft.Network/availabilitySets/', variables('availabilitySetName'))]"
+          "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySetName'))]"
         ],
         "properties": {
           "availabilitySet": {
