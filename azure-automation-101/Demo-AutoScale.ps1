@@ -30,7 +30,7 @@ if ($WebhookData -ne $null) {
     # Login to Azure using Service Principal 
     $secpasswd = ConvertTo-SecureString "<client_secret>" -AsPlainText -Force
     $mycreds = New-Object System.Management.Automation.PSCredential ("<client_id>", $secpasswd)
-    Login-AzureRmAccount -ServicePrincipal -Tenant <tenant_id> -Credential $mycreds  -Subscription <subscription_id>
+    Login-AzureRmAccount -ServicePrincipal -Tenant "<tenant_id>" -Credential $mycreds  -Subscription "<subscription_id>"
 
     # Set Parameters
     $RGName = $AlertContext.resourceGroupName
