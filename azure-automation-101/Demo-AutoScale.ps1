@@ -28,9 +28,9 @@ if ($WebhookData -ne $null) {
     Write-Output $AlertContext.timestamp
 
     # Login to Azure using Service Principal 
-    $secpasswd = ConvertTo-SecureString "r9ynITUshd0n7YIJFElNaaPZ/Ks2iT1nH3LN3rx1wQs=" -AsPlainText -Force
-    $mycreds = New-Object System.Management.Automation.PSCredential ("4bca979d-405f-45ce-973c-1f0369037849", $secpasswd)
-    Login-AzureRmAccount -ServicePrincipal -Tenant 72f988bf-86f1-41af-91ab-2d7cd011db47 -Credential $mycreds  -Subscription af6f3817-cbbe-4afa-ba17-ed7224fe70bc
+    $secpasswd = ConvertTo-SecureString "<client_secret>" -AsPlainText -Force
+    $mycreds = New-Object System.Management.Automation.PSCredential ("<client_id>", $secpasswd)
+    Login-AzureRmAccount -ServicePrincipal -Tenant <tenant_id> -Credential $mycreds  -Subscription <subscription_id>
 
     # Set Parameters
     $RGName = $AlertContext.resourceGroupName
