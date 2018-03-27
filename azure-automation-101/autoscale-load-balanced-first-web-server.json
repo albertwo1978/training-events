@@ -4,21 +4,21 @@
     "parameters": {
       "resourcePrefix": {
         "type": "string",
-        "defaultValue": "p20",
+        "defaultValue": "aa101",
         "metadata": {
           "description": "Globally Unique Prefix"
         }
       },
-      "vmName": {
+      "vm1Name": {
         "type": "string",
-        "defaultValue": "P20WebVM",
+        "defaultValue": "AA101-WebVM1",
         "metadata": {
           "description": "VM Name"
         }
       },
       "vm2Name": {
         "type": "string",
-        "defaultValue": "P20WebVM2",
+        "defaultValue": "AA101-WebVM2",
         "metadata": {
           "description": "VM Name"
         }
@@ -50,7 +50,7 @@
       },
       "vnetName": {
         "type": "string",
-        "defaultValue": "P20VNet",
+        "defaultValue": "AA101VNet",
         "metadata": {
           "description": "VNet Name"
         }
@@ -79,15 +79,12 @@
     },
     "variables": {
       "defaultNsgName": "defaultNsg",
-      "nicName": "WebVMNic",
+      "nic1Name": "WebVM1Nic",
       "nic2Name": "WebVM2Nic",
-      "publicIPAddressName": "P20PublicIP",
-      "publicIPAddress2Name": "P20PublicIP2",
+      "publicIPAddressName": "AA101PublicIP1",
       "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
-      "publicIPAddress2ID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddress2Name'))]",
       "publicIPAddressType": "Dynamic",
-      "dnsNameForPublicIP": "[concat(parameters('resourcePrefix'), uniquestring(resourceGroup().id), '-pip')]",
-      "dnsNameForPublicIP2": "[concat(parameters('resourcePrefix'), uniquestring(resourceGroup().id), '-pip2')]",
+      "dnsNameForPublicIP": "[concat(parameters('resourcePrefix'), uniquestring(resourceGroup().id), '-pip1')]",
       "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName')),'/subnets/',parameters('subnetName'))]",
       "vmSize": "Standard_A0",
       "imagePublisher": "Canonical",
@@ -179,23 +176,10 @@
       },
       {
         "apiVersion": "2015-05-01-preview",
-        "type": "Microsoft.Network/publicIPAddresses",
-        "name": "[variables('publicIPAddress2Name')]",
-        "location": "[resourceGroup().location]",
-        "properties": {
-          "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
-          "dnsSettings": {
-            "domainNameLabel": "[variables('dnsNameForPublicIP2')]"
-          }
-        }
-      },
-      {
-        "apiVersion": "2015-05-01-preview",
         "type": "Microsoft.Network/networkInterfaces",
-        "name": "[variables('nicName')]",
+        "name": "[variables('nic1Name')]",
         "location": "[resourceGroup().location]",
         "dependsOn": [
-          "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
           "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
           "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
         ],
@@ -219,48 +203,19 @@
         }
       },
       {
-        "apiVersion": "2015-05-01-preview",
-        "type": "Microsoft.Network/networkInterfaces",
-        "name": "[variables('nic2Name')]",
-        "location": "[resourceGroup().location]",
-        "dependsOn": [
-          "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddress2Name'))]",
-          "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
-          "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
-        ],
-        "properties": {
-          "ipConfigurations": [
-            {
-              "name": "ipconfig2",
-              "properties": {
-                "privateIPAllocationMethod": "Dynamic",
-                "subnet": {
-                  "id": "[variables('subnetRef')]"
-                },
-                "loadBalancerBackendAddressPools": [
-                  {
-                    "id": "[concat(variables('lbID'), '/backendAddressPools/', variables('backEndPoolName'))]"
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      {
         "apiVersion": "2017-03-30",
         "type": "Microsoft.Compute/virtualMachines",
-        "name": "[parameters('vmName')]",
+        "name": "[parameters('vm1Name')]",
         "location": "[resourceGroup().location]",
         "dependsOn": [
-          "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+          "[concat('Microsoft.Network/networkInterfaces/', variables('nic1Name'))]"
         ],
         "properties": {
           "hardwareProfile": {
             "vmSize": "[variables('vmSize')]"
           },
           "osProfile": {
-            "computerName": "[parameters('vmName')]",
+            "computerName": "[parameters('vm1Name')]",
             "adminUsername": "[parameters('adminUsername')]",
             "adminPassword": "[parameters('adminPassword')]"
           },
@@ -280,46 +235,7 @@
           "networkProfile": {
             "networkInterfaces": [
               {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
-              }
-            ]
-          }
-        }
-      },
-      {
-        "apiVersion": "2017-03-30",
-        "type": "Microsoft.Compute/virtualMachines",
-        "name": "[parameters('vm2Name')]",
-        "location": "[resourceGroup().location]",
-        "dependsOn": [
-          "[concat('Microsoft.Network/networkInterfaces/', variables('nic2Name'))]"
-        ],
-        "properties": {
-          "hardwareProfile": {
-            "vmSize": "[variables('vmSize')]"
-          },
-          "osProfile": {
-            "computerName": "[parameters('vm2Name')]",
-            "adminUsername": "[parameters('adminUsername')]",
-            "adminPassword": "[parameters('adminPassword')]"
-          },
-          "storageProfile": {
-            "imageReference": {
-              "publisher": "[variables('imagePublisher')]",
-              "offer": "[variables('imageOffer')]",
-              "sku": "[parameters('ubuntuOSVersion')]",
-              "version": "latest"
-            },
-            "osDisk": {
-              "name": "osdisk",
-              "caching": "ReadWrite",
-              "createOption": "FromImage"
-            }
-          },
-          "networkProfile": {
-            "networkInterfaces": [
-              {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nic2Name'))]"
+                "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nic1Name'))]"
               }
             ]
           }
@@ -327,34 +243,11 @@
       },
       {
         "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat(parameters('vmName'),'/p20websitescript')]",
+        "name": "[concat(parameters('vm1Name'),'/p20websitescript')]",
         "apiVersion": "2015-05-01-preview",
         "location": "[resourceGroup().location]",
         "dependsOn": [
-          "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
-        ],
-        "properties": {
-          "publisher": "Microsoft.Azure.Extensions",
-          "type": "CustomScript",
-          "typeHandlerVersion": "2.0",
-          "autoUpgradeMinorVersion": true,
-          "settings": {
-            "fileUris": [
-              "https://raw.githubusercontent.com/albertwo1978/training-events/master/azure-automation-101/scripts/install_lap.sh",
-              "https://raw.githubusercontent.com/albertwo1978/training-events/master/azure-automation-101/scripts/index.php",
-              "https://raw.githubusercontent.com/albertwo1978/training-events/master/azure-automation-101/scripts/do_work.php"
-            ],
-            "commandToExecute": "bash install_lap.sh"
-          }
-        }
-      },
-      {
-        "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "[concat(parameters('vmName'),'/p20websitescript')]",
-        "apiVersion": "2015-05-01-preview",
-        "location": "[resourceGroup().location]",
-        "dependsOn": [
-          "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
+          "[concat('Microsoft.Compute/virtualMachines/', parameters('vm1Name'))]"
         ],
         "properties": {
           "publisher": "Microsoft.Azure.Extensions",

@@ -3,13 +3,16 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "resourcePrefix": {
-        "value": "p20" 
+        "value": "aa101" 
       },
-      "vmName": {
-        "value": "P20WebVM"
+      "vm1Name": {
+        "value": "AA101-WebVM1"
+      },      
+      "vm2Name": {
+        "value": "AA101-WebVM2"
       },      
       "adminUsername": {
-        "value": "p20admin"
+        "value": "dxadmin"
       },
       "adminPassword": {
         "value": "P20Password!!"
@@ -18,7 +21,7 @@
         "value": "16.04-LTS"
       },
       "vnetName": {
-        "value": "P20VNet"
+        "value": "AA101VNet"
       },
       "vnetPrefix": {
         "value": "10.0.0.0/16"

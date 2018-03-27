@@ -30,13 +30,13 @@ if ($WebhookData -ne $null) {
     # Login to Azure using Service Principal 
     $secpasswd = ConvertTo-SecureString "<client_secret>" -AsPlainText -Force
     $mycreds = New-Object System.Management.Automation.PSCredential ("<client_id>", $secpasswd)
-    Login-AzureRmAccount -ServicePrincipal -Tenant "<tenant_id>" -Credential $mycreds  -Subscription "<subscription_id>"
+    Login-AzureRmAccount -ServicePrincipal -Tenant "<tenant_id>" -Credential $mycreds  -SubscriptionId "<subscription_id>"
 
     # Set Parameters
     $RGName = $AlertContext.resourceGroupName
 
     New-AzureRmResourceGroupDeployment -Name AA101Deployment -ResourceGroupName $RGName `
-    -TemplateUri https://raw.githubusercontent.com/albertwo1978/training-events/master/azure-automation-101/autoscale-load-balanced-web-server.json
+    -TemplateUri https://raw.githubusercontent.com/albertwo1978/training-events/master/azure-automation-101/autoscale-load-balanced-second-web-server.json
 }
 else 
 {

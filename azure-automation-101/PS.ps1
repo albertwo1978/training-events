@@ -1,0 +1,3 @@
+New-AzureRmResourceGroupDeployment -Name AA101Deployment -ResourceGroupName $RGName `
+-TemplateUri https://raw.githubusercontent.com/albertwo1978/training-events/master/azure-automation-101/autoscale-load-balanced-second-web-server.json `
+-TemplateParameterUri https://raw.githubusercontent.com/albertwo1978/training-events/master/azure-automation-101/autoscale-load-balanced-web-server.parameters.json
