@@ -13,6 +13,12 @@ Password: ```Check with alhussai@microsoft.com```
 
 GitHub Repo: [Templates](https://github.com/albertwo1978/training-events/tree/master/jenkins)
 
+# Overview
+We will be deploying a single VM that will configure Apache web page via custom extension.
+<p align="center">
+    <img src="./src/Single-VM-Multi-Site.JPG" width="600" height="300" title="Single VM">
+</p>
+
 ## [Pipeline Steps](http://jenkinsv2.eastus.cloudapp.azure.com:8080/job/ARM_Demo/job/Build_P20_Demo_Pipeline/)
 
 
